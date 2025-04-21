@@ -1,0 +1,10 @@
+import pandas as pd  
+
+def clean_data(raw_data_path):  
+    df = pd.read_csv(raw_data_path)  
+    df["subscribers"] = df["statistics"].apply(lambda x: eval(x)["subscriberCount"])  
+    df.dropna(inplace=True)  
+    return df  
+
+clean_df = clean_data("raw_data.csv")  
+clean_df.to_parquet("processed_data.parquet")  # Efficient storage  
