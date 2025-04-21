@@ -1,0 +1,13 @@
+YouTube API Data Extraction
+import googleapiclient.discovery  
+import pandas as pd  
+
+def fetch_youtube_data(api_key, channel_id):  
+    youtube = googleapiclient.discovery.build("youtube", "v3", developerKey=api_key)  
+    request = youtube.channels().list(part="statistics", id=channel_id)  
+    response = request.execute()  
+    return pd.DataFrame(response["items"])  
+
+# Example usage  
+data = fetch_youtube_data("YOUR_API_KEY", "CHANNEL_ID")  
+data.to_csv("raw_data.csv")  
